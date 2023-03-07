@@ -2,9 +2,7 @@ package com.me.textrecognizer.data.repository
 
 import android.content.Context
 import android.net.Uri
-import android.util.Log
-import com.google.firebase.firestore.ktx.firestore
-import com.google.firebase.ktx.Firebase
+import com.google.firebase.firestore.FirebaseFirestore
 import com.google.mlkit.vision.common.InputImage
 import com.google.mlkit.vision.text.Text
 import com.google.mlkit.vision.text.TextRecognition
@@ -26,6 +24,7 @@ import javax.inject.Inject
 class RepositoryImpl @Inject constructor(
     private val api: NetworkService,
     private val dispatcherProvider: DispatcherProvider,
+    private val db: FirebaseFirestore,
 ) : Repository {
 
     companion object {
@@ -79,13 +78,10 @@ class RepositoryImpl @Inject constructor(
                     "distance" to distance,
                     "duration" to duration
                 )
-                val db = Firebase.firestore
                 val documentReference = db.collection(COLLECTION).add(data).await()
                 emit(Resource.Success(documentReference.id))
-                Log.e("TAG", "DocumentSnapshot added with ID: ${documentReference.id}")
             } catch (e: Exception) {
-                e.printStackTrace()
-                Log.e("TAG", "Error adding document", e)
+                emit(Resource.Error("Error adding document"))
             }
             emit(Resource.Loading(false))
         }.flowOn(dispatcherProvider.io)
@@ -105,12 +101,10 @@ class RepositoryImpl @Inject constructor(
                     "distance" to distance,
                     "duration" to duration
                 )
-                val db = Firebase.firestore
                 db.collection(COLLECTION).document(documentId).update(data)
                 emit(Resource.Success("success"))
             } catch (e: Exception) {
-                e.printStackTrace()
-                Log.e("TAG", "Error adding document", e)
+                emit(Resource.Error("Error editing document"))
             }
             emit(Resource.Loading(false))
         }.flowOn(dispatcherProvider.io)
@@ -120,7 +114,6 @@ class RepositoryImpl @Inject constructor(
         return flow {
             emit(Resource.Loading(true))
             try {
-                val db = Firebase.firestore
                 val results = db.collection(COLLECTION).get().await()
                 val document = results.filter { it.id == documentId }.mapNotNull {
                     DataFirebase(
@@ -133,8 +126,7 @@ class RepositoryImpl @Inject constructor(
                     Resource.Success(document.first())
                 )
             } catch (e: Exception) {
-                e.printStackTrace()
-                Log.e("TAG", "Error adding document", e)
+                emit(Resource.Error("Error get data document"))
             }
             emit(Resource.Loading(false))
         }.flowOn(dispatcherProvider.io)
@@ -149,7 +141,7 @@ class RepositoryImpl @Inject constructor(
                 val firebaseVisionText = recognizer.process(image).await()
                 emit(Resource.Success(firebaseVisionText))
             } catch (e: Exception) {
-                Log.e("debug", "Error processImage: ", e)
+                emit(Resource.Error("Error processing Image"))
             }
             emit(Resource.Loading(false))
         }.flowOn(dispatcherProvider.io)

@@ -1,5 +1,8 @@
 package com.me.textrecognizer.data.module
 
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 import com.me.textrecognizer.utils.DefaultDispatcherProvider
 import com.me.textrecognizer.utils.DispatcherProvider
 import dagger.Module
@@ -16,6 +19,12 @@ object AppModule {
     @Singleton
     fun provideDispatcherProvider(): DispatcherProvider {
         return DefaultDispatcherProvider()
+    }
+
+    @Provides
+    @Singleton
+    fun provideFirebaseProvider(): FirebaseFirestore {
+        return Firebase.firestore
     }
 
 }
