@@ -1,4 +1,4 @@
-package com.me.textrecognizer.persentation
+package com.me.textrecognizer.presentation
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -13,9 +13,9 @@ import androidx.compose.ui.Modifier
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 import com.me.textrecognizer.R
-import com.me.textrecognizer.persentation.components.AppPermission
-import com.me.textrecognizer.persentation.components.TopBar
-import com.me.textrecognizer.persentation.navigation.RootNavigationGraph
+import com.me.textrecognizer.presentation.components.AppPermission
+import com.me.textrecognizer.presentation.components.TopBar
+import com.me.textrecognizer.presentation.navigation.RootNavigationGraph
 import com.me.textrecognizer.ui.theme.TextRecognizerTheme
 import dagger.hilt.android.AndroidEntryPoint
 import java.io.File

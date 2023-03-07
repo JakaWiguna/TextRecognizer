@@ -12,6 +12,9 @@ android {
     compileSdk 33
 
     defaultConfig {
+        manifestPlaceholders = [
+                MAPS_API_KEY: getProps("MAPS_API_KEY")
+        ]
         applicationId "com.me.textrecognizer"
         minSdk 24
         targetSdk 33
@@ -27,13 +30,13 @@ android {
     buildTypes {
         debug {
             buildConfigField("String", "API_BASE_URL", "\"" + API_BASE_URL + "\"")
-            buildConfigField("String", "MAP_API_KEY", "\"" + MAP_API_KEY + "\"")
+            buildConfigField "String", "MAPS_API_KEY", "\"" + getProps("MAPS_API_KEY") + "\""
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
         release {
             buildConfigField("String", "API_BASE_URL", "\"" + API_BASE_URL + "\"")
-            buildConfigField("String", "MAP_API_KEY", "\"" + MAP_API_KEY + "\"")
+            buildConfigField "String", "MAPS_API_KEY", "\"" + getProps("MAPS_API_KEY") + "\""
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
@@ -58,7 +61,16 @@ android {
         }
     }
 }
-
+def getProps(String propName) {
+    def propsFile = rootProject.file('local.properties')
+    if (propsFile.exists()) {
+        def props = new Properties()
+        props.load(new FileInputStream(propsFile))
+        return props[propName]
+    } else {
+        return "";
+    }
+}
 dependencies {
     implementation platform('com.google.firebase:firebase-bom:31.2.3')
     implementation 'com.google.firebase:firebase-firestore-ktx:24.1.1'
