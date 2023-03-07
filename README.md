@@ -24,5 +24,5 @@ That's it! Your project is now ready to use the Maps SDK.
 
 ## Demo
 
-![App Screenshot](https://im5.ezgif.com/tmp/ezgif-5-79bbf16345.gif)
+![App Screenshot](https://im5.ezgif.com/tmp/ezgif-5-de90d80181.gif)
 
