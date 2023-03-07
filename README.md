@@ -24,5 +24,6 @@ That's it! Your project is now ready to use the Maps SDK.
 
 ## Demo
 
-![App Screenshot](https://im5.ezgif.com/tmp/ezgif-5-c65ac31ddc.gif)
+![App Demo](https://github.com/JakaWiguna/TextRecognizer/blob/main/demo/demo.gif)
+
 
