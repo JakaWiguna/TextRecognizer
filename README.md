@@ -21,6 +21,8 @@ MAPS_API_KEY=YOUR_API_KEY
 Note that the ${MAPS_API_KEY} syntax is used to read the API key from the local.properties file.
 That's it! Your project is now ready to use the Maps SDK.
 
+
 ## Demo
 
-![App Screenshot](https://im5.ezgif.com/tmp/ezgif-5-647a40ed7c.gif)
+![App Screenshot](https://im5.ezgif.com/tmp/ezgif-5-79bbf16345.gif)
+
